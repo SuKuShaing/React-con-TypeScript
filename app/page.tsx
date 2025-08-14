@@ -15,24 +15,38 @@ const random = (): number => {
 };
 const urlFox = `https://randomfox.ca/images/${random()}.jpg`;
 
+const generateId = (): string => Math.random().toString(36).substring(2, 9);
+
+/**
+ * Math.random() → 0.123456789		
+ * .toString(36) → "0.4fzyo3mry"	convierte el número decimal a texto usando base 36
+ * .substring(2, 9) → "4fzyo3m"		Extrae el texto de la posición 2 a la 9
+ */
+
+/**
+ * Un array se puede escribir así Array<string> o string[], las dos son igualmente validas
+ * con objetos sería Array<{...}> o {...}[], las dos son validas
+ */
+
+type ImageItem = {id: string, url: string};
+
 export default function Home() {
-	const [images, setImages] = useState<string[]>([
-		`https://randomfox.ca/images/${random()}.jpg`,
-		`https://randomfox.ca/images/${random()}.jpg`,
-		`https://randomfox.ca/images/${random()}.jpg`,
-		`https://randomfox.ca/images/${random()}.jpg`,
-		`https://randomfox.ca/images/${random()}.jpg`,
-		`https://randomfox.ca/images/${random()}.jpg`,
-		`https://randomfox.ca/images/${random()}.jpg`,
+	const [images, setImages] = useState<Array<ImageItem>>([
+		{ id: generateId(), url: `https://randomfox.ca/images/${random()}.jpg` },
+		{ id: generateId(), url: `https://randomfox.ca/images/${random()}.jpg` },
+		{ id: generateId(), url: `https://randomfox.ca/images/${random()}.jpg` },
+		{ id: generateId(), url: `https://randomfox.ca/images/${random()}.jpg` },
+		{ id: generateId(), url: `https://randomfox.ca/images/${random()}.jpg` },
+		{ id: generateId(), url: `https://randomfox.ca/images/${random()}.jpg` },
 	]);
 
 	return (
 		<>
 			<main className="flex flex-col items-center">
 				<h1 className="text-4xl font-bold">Zorritos Platzi</h1>
-				{images.map((image, index) => (
-					<div key={index} className="p-2">
-						<RandomFox image={image} alt="Un lindo zorrito" />
+				{images.map(({ id, url }) => (
+					<div key={id} className="p-2">
+						<RandomFox image={url} alt="Un lindo zorrito" />
 					</div>
 				))}
 			</main>
