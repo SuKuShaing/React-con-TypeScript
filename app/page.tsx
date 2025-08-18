@@ -8,6 +8,7 @@
  */
 
 import { RandomFox } from "@/components/RandomFox";
+import { RandomFoxLazy } from "@/components/RandomFoxLazy";
 import { MouseEventHandler, useState } from "react";
 
 const random = (): number => {
@@ -53,6 +54,7 @@ export default function Home() {
 				{images.map(({ id, url }) => (
 					<div key={id} className="p-2">
 						<RandomFox image={url} alt="Un lindo zorrito" />
+						{/* <RandomFoxLazy image={url} alt="Un lindo zorrito" /> */}
 					</div>
 				))}
 			</main>
