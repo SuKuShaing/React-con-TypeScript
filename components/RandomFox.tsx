@@ -1,6 +1,14 @@
 "use client";
 
-import { FC, FunctionComponent, ImgHTMLAttributes, JSX, useEffect, useRef, useState } from "react";
+import {
+	FC,
+	FunctionComponent,
+	ImgHTMLAttributes,
+	JSX,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 
 /*
 export const RandomFox1 = () => {                       // implícito
@@ -20,21 +28,29 @@ export const RandomFox4: FC = () => {                   // explícito y tipamos 
 };
 */
 
-type ImageNative = ImgHTMLAttributes<HTMLImageElement>
+type ImageNative = ImgHTMLAttributes<HTMLImageElement>;
 
-type LazyImageProps = { src: string };
+type LazyImageProps = { src: string; onLazyLoad?: (img: HTMLImageElement) => void };
 
 type Props = LazyImageProps & ImageNative;
 
-export const LazyImage = ({ src, ...imgProps }: Props): JSX.Element => {
+export const LazyImage = ({
+	src,
+	onLazyLoad,
+	...imgProps
+}: Props): JSX.Element => {
 	const node = useRef<HTMLImageElement>(null); // HTMLImageElement, se le pasa el tipo de donde ser usará
-	const [currentSrc, setCurrentSrc] = useState<string>("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjMyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4=");
+	
+	const [currentSrc, setCurrentSrc] = useState<string>(
+		"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjMyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="
+	);
 	// "data:image/svg+xml;base64,PHN2ZyB3aWR0aD..." es un placeholder (una imagen transparente) para que se vea el componente mientras se carga la imagen, más abajo se le da color a la imagen
 
-	useEffect(()=>{
+	useEffect(() => {
 		// nuevo observador
 		const observer = new IntersectionObserver((entries) => {
-			entries.forEach((entry) => {	// se itera por cada nodo que tenga entries
+			entries.forEach((entry) => {
+				// se itera por cada nodo que tenga entries
 				// onIntersection -> console.log
 				if (entry.isIntersecting) {
 					console.log("Ya se ve el elemento");
@@ -45,13 +61,12 @@ export const LazyImage = ({ src, ...imgProps }: Props): JSX.Element => {
 
 		// observe node
 		if (node.current) {
-			observer.observe(node.current);	// aquí se observa el nodo con el observer que ya tiene cargado el código a ejecutar
+			observer.observe(node.current); // aquí se observa el nodo con el observer que ya tiene cargado el código a ejecutar
 		}
 
 		// desconectar el observador
 		return () => observer.disconnect(); // sí se elimina del DOM, se desconecta el observer para ahorrar recursos
 	}, [src]);
-
 
 	return (
 		<img
