@@ -7,7 +7,7 @@
  * sino que el cliente la renderice.
  */
 
-import { RandomFox } from "@/components/RandomFox";
+import { LazyImage } from "@/components/RandomFox";
 import { RandomFoxLazy } from "@/components/RandomFoxLazy";
 import { MouseEventHandler, useState } from "react";
 
@@ -40,20 +40,24 @@ export default function Home() {
 			url: `https://randomfox.ca/images/${random()}.jpg`,
 		};
 
-		setImages([
-			...images,
-			newImageItem,
-		])
+		setImages([...images, newImageItem]);
 	};
 
 	return (
 		<>
 			<main className="flex flex-col items-center">
 				<h1 className="text-4xl font-bold">Zorritos Platzi</h1>
-				<button onClick={addNewFox}>Añadir zorro</button>
+				<button className="bg-green-700 text-white py-2 px-4 rounded-xl mt-4 hover:bg-green-800 active:bg-green-900" onClick={addNewFox}>Añadir zorro</button>
 				{images.map(({ id, url }) => (
 					<div key={id} className="p-2">
-						<RandomFox image={url} alt="Un lindo zorrito" />
+						<LazyImage
+							src={url}
+							width={512}
+							height="auto"
+							alt="Un lindo zorrito"
+							title="Un lindo zorrito title"
+							onClick={() => console.log(`Click en la imagen ${id}`)}
+						/>
 						{/* <RandomFoxLazy image={url} alt="Un lindo zorrito" /> */}
 					</div>
 				))}
