@@ -29,13 +29,15 @@ const generateId = (): string => Math.random().toString(36).substring(2, 9);
  * con objetos sería Array<{...}> o {...}[], las dos son validas
  */
 
-type ImageItem = { id: string; url: string };
+
+// type ImageItem = { id: string; url: string };
+// esto se movió a app.d.ts
 
 export default function Home() {
-	const [images, setImages] = useState<Array<ImageItem>>([]);
+	const [images, setImages] = useState<Array<IFoxImageItem>>([]);
 
 	const addNewFox: MouseEventHandler<HTMLButtonElement> = (event) => {
-		const newImageItem: ImageItem = {
+		const newImageItem: IFoxImageItem = {
 			id: generateId(),
 			url: `https://randomfox.ca/images/${random()}.jpg`,
 		};
