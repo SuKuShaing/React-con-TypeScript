@@ -10,14 +10,18 @@
 import { LazyImage } from "@/components/RandomFox";
 import { RandomFoxLazy } from "@/components/RandomFoxLazy";
 import { MouseEventHandler, useState } from "react";
+import { random as randomLodash } from "lodash";
 
-const random = (): number => {
-	return Math.floor(Math.random() * 124) + 1;
-};
+// const random = (): number => {
+// 	return Math.floor(Math.random() * 124) + 1;
+// };
+const random = () => randomLodash(1, 124);
+
+
 const urlFox = `https://randomfox.ca/images/${random()}.jpg`;
 
+// Genera un id aleatorio para la imagen
 const generateId = (): string => Math.random().toString(36).substring(2, 9);
-
 /**
  * Math.random() → 0.123456789
  * .toString(36) → "0.4fzyo3mry"	convierte el número decimal a texto usando base 36
