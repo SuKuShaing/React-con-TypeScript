@@ -47,6 +47,7 @@ export default function Home() {
 		};
 
 		setImages([...images, newImageItem]);
+		window.plausible("add_fox");
 	};
 
 	return (
